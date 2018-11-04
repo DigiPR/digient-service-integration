@@ -1,0 +1,176 @@
+---
+swagger: "2.0"
+info:
+  title: "Payment API"
+  version: "1.0.0"
+basePath: "/api"
+schemes:
+- "https"
+paths:
+  /discount:
+    get:
+      operationId: "calculateDiscount"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "customerId"
+        in: "query"
+        type: "string"
+        required: true
+      - name: "amount"
+        in: "query"
+        type: "string"
+        required: true
+      - name: "numberOfItems"
+        in: "query"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Discount"
+  /payment/{transactionId}:
+    delete:
+      operationId: "deleteCanceledPayment"
+      parameters:
+      - name: "transactionId"
+        in: "path"
+        type: "integer"
+        format: "int64"
+        required: true
+      responses:
+        200:
+          description: "OK"
+    get:
+      operationId: "getPayment"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "transactionId"
+        in: "path"
+        type: "integer"
+        format: "int64"
+        required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Transaction"
+    put:
+      operationId: "updateCanceledPayment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "transactionId"
+        in: "path"
+        type: "integer"
+        format: "int64"
+        required: true
+      - in: "body"
+        name: "transaction"
+        schema:
+          $ref: "#/definitions/Transaction"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Transaction"
+  /payment:
+    get:
+      operationId: "listPayments"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "customerId"
+        in: "query"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Transaction"
+    post:
+      operationId: "requestPayment"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "ordersheet"
+        schema:
+          $ref: "#/definitions/OrderSheet"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/OrderSheet"
+definitions:
+  Discount:
+    type: "object"
+    properties:
+      discount:
+        type: "number"
+        format: "double"
+  OrderSheet:
+    type: "object"
+    properties:
+      orderId:
+        type: "string"
+      customerId:
+        type: "string"
+      amount:
+        type: "number"
+        format: "double"
+      numberOfItems:
+        type: "integer"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderItem"
+      transactionId:
+        type: "string"
+      trackingId:
+        type: "string"
+      packingSlipId:
+        type: "string"
+  Transaction:
+    type: "object"
+    properties:
+      transactionId:
+        type: "integer"
+        format: "int64"
+      customerId:
+        type: "string"
+      reference:
+        type: "string"
+      amount:
+        type: "number"
+        format: "double"
+      numberOfItems:
+        type: "integer"
+      discount:
+        type: "number"
+        format: "double"
+      chargingAmount:
+        type: "number"
+        format: "double"
+      cardTransactionId:
+        type: "string"
+      isCanceled:
+        type: "boolean"
+  OrderItem:
+    type: "object"
+    properties:
+      itemId:
+        type: "string"
+      productId:
+        type: "string"
+      quantity:
+        type: "integer"

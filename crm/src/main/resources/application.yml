@@ -1,0 +1,7 @@
+server:
+  port: 8083
+cxf:
+  path: /api
+  jaxrs:
+    component-scan: true
+    classes-scan-packages: org.apache.cxf.jaxrs.swagger

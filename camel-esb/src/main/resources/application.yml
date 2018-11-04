@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+camel:
+  component:
+    servlet:
+      mapping:
+        context-path: /*
+
+endpoints:
+  jolokia:
+    sensitive: false
+
+management:
+  port: 8180
+  security:
+    enabled: false
+
+hawtio:
+  authenticationEnabled: false

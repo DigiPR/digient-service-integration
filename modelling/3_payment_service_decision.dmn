@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_1xha4od" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="Decision_discount" name="Discount">
+    <extensionElements>
+      <biodi:bounds x="205" y="197" width="180" height="80" />
+      <biodi:edge source="InputData_0ylifuq">
+        <biodi:waypoints x="285" y="341" />
+        <biodi:waypoints x="334" y="277" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1f8t3vp">
+        <biodi:waypoints x="166" y="337" />
+        <biodi:waypoints x="253" y="277" />
+      </biodi:edge>
+      <biodi:edge source="InputData_1m41fkf">
+        <biodi:waypoints x="456" y="341" />
+        <biodi:waypoints x="385" y="264" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredInput href="#InputData_0ylifuq" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_1f8t3vp" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#InputData_1m41fkf" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="Customer Type">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>customerType</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1vqjqe7">
+          <text>"Business","Private"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_0xntnzn" label="Number of items">
+        <inputExpression id="LiteralExpression_0y7if4h" typeRef="integer">
+          <text>numberOfItems</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_12t1hp6" label="Amount">
+        <inputExpression id="LiteralExpression_0ofwdq4" typeRef="double">
+          <text>amount</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Discount" name="discount" typeRef="double" />
+      <output id="OutputClause_0xyq0pj" label="Discount possible?" name="discountPossible" typeRef="boolean" />
+      <rule id="DecisionRule_1aylhpk">
+        <inputEntry id="UnaryTests_16q7ebh">
+          <text>"Business"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gsjteb">
+          <text>&lt;10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0koccs2">
+          <text>&gt;1000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1v79x78">
+          <text>0.10</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1uyvo5l">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06gw454">
+        <inputEntry id="UnaryTests_1uts7w6">
+          <text>"Business"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d3o49w">
+          <text>&gt;=10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kqcgiu">
+          <text>&gt;1000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0z10k71">
+          <text>0.15</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0tefgrx">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qgzsqc">
+        <inputEntry id="UnaryTests_0sxyejf">
+          <text>"Private"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1t3ybo1">
+          <text>&gt;2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vevo3l">
+          <text>&gt;500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0upknzo">
+          <text>0.05</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1btdzpz">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_135qugf">
+        <inputEntry id="UnaryTests_0937hpz">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hzmo2g">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0aohtlp">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1enmvdw">
+          <text>0.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10lu74m">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1f8t3vp" name="Customer Type">
+    <extensionElements>
+      <biodi:bounds x="84" y="337" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_0ylifuq" name="Number of items">
+    <extensionElements>
+      <biodi:bounds x="243" y="341" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+  <inputData id="InputData_1m41fkf" name="Amount">
+    <extensionElements>
+      <biodi:bounds x="407" y="341" width="125" height="45" />
+    </extensionElements>
+  </inputData>
+</definitions>
