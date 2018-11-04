@@ -10,7 +10,6 @@
     <bpmn:messageFlow id="MessageFlow_1mqnb9i" sourceRef="Task_1wlnr3t" targetRef="Task_06ir9pk" />
     <bpmn:messageFlow id="MessageFlow_1rov0ex" sourceRef="Task_1a23273" targetRef="Task_0z9ybqs" />
     <bpmn:messageFlow id="MessageFlow_1uegzy0" sourceRef="Task_0z9ybqs" targetRef="Task_1a23273" />
-    <bpmn:messageFlow id="MessageFlow_0uvzgrx" sourceRef="Task_0t6kq6w" targetRef="Task_0yfwh1o" />
     <bpmn:messageFlow id="MessageFlow_0d6pntr" sourceRef="Task_0y16639" targetRef="Task_1p1ssyi" />
     <bpmn:messageFlow id="MessageFlow_0zqulx8" sourceRef="Task_1p1ssyi" targetRef="Task_0y16639" />
     <bpmn:messageFlow id="MessageFlow_1r7l5f8" sourceRef="Task_1p1ssyi" targetRef="Participant_133quyl" />
@@ -52,19 +51,6 @@
       <bpmn:outgoing>SequenceFlow_0zvmgoo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="SequenceFlow_0zvmgoo" name="No" sourceRef="ExclusiveGateway_1dsyv2m" targetRef="Task_1a23273" />
-    <bpmn:boundaryEvent id="BoundaryEvent_1ilvuuc" name="Charge failed" attachedToRef="Task_0y16639">
-      <bpmn:outgoing>SequenceFlow_0lpo98f</bpmn:outgoing>
-      <bpmn:errorEventDefinition />
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0lpo98f" sourceRef="BoundaryEvent_1ilvuuc" targetRef="EndEvent_0yjsfs5" />
-    <bpmn:endEvent id="EndEvent_0yjsfs5" name="Payment failed">
-      <bpmn:incoming>SequenceFlow_0lpo98f</bpmn:incoming>
-      <bpmn:compensateEventDefinition />
-    </bpmn:endEvent>
-    <bpmn:boundaryEvent id="BoundaryEvent_13o900b" name="Payment failed" attachedToRef="Task_1a23273">
-      <bpmn:compensateEventDefinition />
-    </bpmn:boundaryEvent>
-    <bpmn:serviceTask id="Task_0t6kq6w" name="Restore loyalty points" isForCompensation="true" />
     <bpmn:serviceTask id="Task_1i4m1t2" name="Calculate&#10;discount">
       <bpmn:incoming>SequenceFlow_0gzjdcv</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1y241fj</bpmn:outgoing>
@@ -73,22 +59,20 @@
       <bpmn:incoming>SequenceFlow_01u720f</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_07bkal0</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:association id="Association_0a1tooa" associationDirection="One" sourceRef="BoundaryEvent_13o900b" targetRef="Task_0t6kq6w" />
   </bpmn:process>
   <bpmn:process id="Process_1hcxw5a" isExecutable="false">
     <bpmn:serviceTask id="Task_1n59okl" name="calculate&#10;Discount()">
-      <bpmn:property id="Property_0h174db" name="__targetRef_placeholder" />
-      <bpmn:dataInputAssociation id="DataInputAssociation_0n4nqqv">
-        <bpmn:sourceRef>DataObjectReference_1h423ji</bpmn:sourceRef>
-        <bpmn:targetRef>Property_0h174db</bpmn:targetRef>
+      <bpmn:property id="Property_176rxxt" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_0jx291h">
+        <bpmn:sourceRef>DataObjectReference_08yt9ph</bpmn:sourceRef>
+        <bpmn:targetRef>Property_176rxxt</bpmn:targetRef>
       </bpmn:dataInputAssociation>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_1wlnr3t" name="applyDiscount()" />
     <bpmn:serviceTask id="Task_0z9ybqs" name="deductLoyalty&#10;Points()" />
-    <bpmn:serviceTask id="Task_0yfwh1o" name="restoreLoyalty&#10;Points()" />
     <bpmn:serviceTask id="Task_1p1ssyi" name="chargeCredit&#10;Card()" />
-    <bpmn:dataObjectReference id="DataObjectReference_1h423ji" name="Discount rules (DMN)" dataObjectRef="DataObject_0t24col" />
-    <bpmn:dataObject id="DataObject_0t24col" />
+    <bpmn:dataObjectReference id="DataObjectReference_08yt9ph" name="Discount rules (DMN)" dataObjectRef="DataObject_1v5kffe" />
+    <bpmn:dataObject id="DataObject_1v5kffe" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0l5f6cg">
@@ -177,37 +161,6 @@
           <dc:Bounds x="608" y="72" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BoundaryEvent_0ue36ng_di" bpmnElement="BoundaryEvent_1ilvuuc" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
-        <dc:Bounds x="995" y="180" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1021" y="221" width="66" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0lpo98f_di" bpmnElement="SequenceFlow_0lpo98f">
-        <di:waypoint x="1013" y="216" />
-        <di:waypoint x="1013" y="275" />
-        <di:waypoint x="1055" y="275" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_1tr007o_di" bpmnElement="EndEvent_0yjsfs5" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
-        <dc:Bounds x="1055" y="257" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1037" y="300" width="73" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BoundaryEvent_0amce53_di" bpmnElement="BoundaryEvent_13o900b" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
-        <dc:Bounds x="749" y="180" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="773" y="221" width="73" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0a1tooa_di" bpmnElement="Association_0a1tooa">
-        <di:waypoint x="767" y="216" />
-        <di:waypoint x="767" y="275" />
-        <di:waypoint x="809" y="275" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0ioy9dq_di" bpmnElement="Task_0t6kq6w" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
-        <dc:Bounds x="809" y="235" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_0hwp4g2_di" bpmnElement="Participant_0hwp4g2">
         <dc:Bounds x="179" y="371" width="998" height="128" />
       </bpmndi:BPMNShape>
@@ -238,26 +191,19 @@
         <di:waypoint x="715" y="391" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_1uegzy0_di" bpmnElement="MessageFlow_1uegzy0">
-        <di:waypoint x="744" y="391" />
-        <di:waypoint x="744" y="198" />
+        <di:waypoint x="774" y="391" />
+        <di:waypoint x="774" y="198" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1f194yq_di" bpmnElement="Task_0z9ybqs" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB">
         <dc:Bounds x="694" y="391" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="MessageFlow_0uvzgrx_di" bpmnElement="MessageFlow_0uvzgrx">
-        <di:waypoint x="859" y="315" />
-        <di:waypoint x="859" y="391" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_1cozfyu_di" bpmnElement="Task_0yfwh1o" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
-        <dc:Bounds x="809" y="391" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_0d6pntr_di" bpmnElement="MessageFlow_0d6pntr">
         <di:waypoint x="958" y="198" />
         <di:waypoint x="958" y="391" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_0zqulx8_di" bpmnElement="MessageFlow_0zqulx8">
-        <di:waypoint x="986" y="391" />
-        <di:waypoint x="986" y="198" />
+        <di:waypoint x="1020" y="391" />
+        <di:waypoint x="1020" y="198" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_0l7o38n_di" bpmnElement="Task_1p1ssyi" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
         <dc:Bounds x="936" y="391" width="100" height="80" />
@@ -270,25 +216,25 @@
         <di:waypoint x="960" y="524" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="MessageFlow_07jd4xa_di" bpmnElement="MessageFlow_07jd4xa">
-        <di:waypoint x="986" y="524" />
-        <di:waypoint x="986" y="471" />
+        <di:waypoint x="1018" y="524" />
+        <di:waypoint x="1018" y="471" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataObjectReference_1h423ji_di" bpmnElement="DataObjectReference_1h423ji" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
+      <bpmndi:BPMNShape id="ServiceTask_07vkmoz_di" bpmnElement="Task_1i4m1t2" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
+        <dc:Bounds x="319" y="118" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0n14sog_di" bpmnElement="Task_06ir9pk" bioc:stroke="#8E24AA" bioc:fill="#E1BEE7">
+        <dc:Bounds x="545" y="118" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_08yt9ph_di" bpmnElement="DataObjectReference_08yt9ph" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
         <dc:Bounds x="245" y="406" width="36" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="228" y="463" width="71" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="DataInputAssociation_0n4nqqv_di" bpmnElement="DataInputAssociation_0n4nqqv">
+      <bpmndi:BPMNEdge id="DataInputAssociation_0jx291h_di" bpmnElement="DataInputAssociation_0jx291h">
         <di:waypoint x="281" y="431" />
         <di:waypoint x="313" y="431" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_01kalpu_di" bpmnElement="Task_1i4m1t2" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
-        <dc:Bounds x="319" y="118" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_1vwosbf_di" bpmnElement="Task_06ir9pk" bioc:stroke="#8E24AA" bioc:fill="#E1BEE7">
-        <dc:Bounds x="545" y="118" width="100" height="80" />
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
