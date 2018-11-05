@@ -50,7 +50,7 @@ public class CamelRoutes extends RouteBuilder {
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.POST))
                 .marshal().json(JsonLibrary.Jackson, OrderMessage.class)
                 .convertBodyTo(String.class)
-                .to("http4://localhost:8082/api/payment")
+                .to("http4://localhost:8084/api/payment")
                 .unmarshal().json(JsonLibrary.Jackson, OrderMessage.class);
 
 
@@ -60,7 +60,7 @@ public class CamelRoutes extends RouteBuilder {
                 .removeHeaders("CamelHttp*")
                 .setHeader("Accept", constant("application/json"))
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
-                .toD("http4://localhost:8083/api/customer/${header.customerId}")
+                .toD("http4://localhost:8082/api/customer/${header.customerId}")
                 .unmarshal().json(JsonLibrary.Jackson, Customer.class)
                 .endRest();
 
@@ -72,7 +72,7 @@ public class CamelRoutes extends RouteBuilder {
                 .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.PUT))
                 .marshal().json(JsonLibrary.Jackson, Customer.class)
                 .convertBodyTo(String.class)
-                .toD("http4://localhost:8083/api/loyalty/${header.customerId}")
+                .toD("http4://localhost:8082/api/loyalty/${header.customerId}")
                 .endRest();
     }
 }
