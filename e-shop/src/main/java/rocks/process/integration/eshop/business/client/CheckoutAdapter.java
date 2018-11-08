@@ -19,7 +19,7 @@ public class CheckoutAdapter {
 
     public void doCheckout(OrderMessage orderMessage){
 
-        restTemplate.postForObject("http://localhost:8080/order", new HttpEntity<>(orderMessage), OrderMessage.class);
+        restTemplate.postForObject("http://localhost:8080/camel/order", new HttpEntity<>(orderMessage), OrderMessage.class);
 
     }
 }
