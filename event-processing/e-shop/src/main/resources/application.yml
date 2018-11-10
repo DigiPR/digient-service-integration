@@ -1,0 +1,15 @@
+server:
+  port: 8086
+spring:
+  profiles:
+    active: local
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: digibp-retail
+          content-type: application/json
+        input:
+          destination: digibp-retail
+          content-type: application/json
+      default-binder: rabbit

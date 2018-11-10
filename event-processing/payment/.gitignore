@@ -24,5 +24,4 @@
 /nbdist/
 /.nb-gradle/
 
-*.vpp.bak*
 *-local.yaml
