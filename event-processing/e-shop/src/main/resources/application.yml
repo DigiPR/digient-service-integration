@@ -7,9 +7,6 @@ spring:
     stream:
       bindings:
         output:
-          destination: digibp-retail
-          content-type: application/json
-        input:
-          destination: digibp-retail
+          destination: order-fulfillment
           content-type: application/json
       default-binder: rabbit

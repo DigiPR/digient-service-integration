@@ -81,7 +81,7 @@
     <bpmn:serviceTask id="ServiceTask_056sibk" name="Do payment" />
   </bpmn:process>
   <bpmn:process id="Process_0u2mfsy" isExecutable="false">
-    <bpmn:serviceTask id="ServiceTask_1bgo0p7" name="Do fetch goods" />
+    <bpmn:serviceTask id="ServiceTask_1bgo0p7" name="Fetch goods" />
   </bpmn:process>
   <bpmn:process id="Process_1rg3sd8" isExecutable="false">
     <bpmn:serviceTask id="ServiceTask_1fuspuo" name="Do shipping" />

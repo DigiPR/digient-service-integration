@@ -29,16 +29,17 @@ public class MessageEventListener {
     private static Logger logger = LoggerFactory.getLogger(MessageEventListener.class);
 
     @StreamListener(target = Sink.INPUT,
-            condition="(headers['type']?:'')=='ShipGoods'")
+            condition = "headers['type']=='ShipGoods'")
     @Transactional
     public void payment(@Payload EventMessage<OrderMessage> eventMessage) throws Exception {
         OrderMessage orderMessage = eventMessage.getPayload();
-        logger.info("Payload received: "+orderMessage.toString());
+        logger.info("Payload received: " + orderMessage.toString());
         Tracking tracking = shipmentService.shipGoods(Long.valueOf(orderMessage.getCustomerId()), orderMessage.getOrderId(), orderMessage.getPackingSlipId());
         orderMessage.setTrackingId(tracking.getTrackingId());
         orderMessage.setStatus("GoodsShipped");
         logger.info(orderMessage.toString());
     }
 
-
+    @StreamListener(target = Sink.INPUT)
+    public void defaultListener() {}
 }

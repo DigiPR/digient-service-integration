@@ -11,9 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import rocks.process.integration.inventory.business.domain.OrderItem;
@@ -21,27 +25,27 @@ import rocks.process.integration.inventory.business.domain.PackingSlip;
 import rocks.process.integration.inventory.business.service.InventoryService;
 import rocks.process.integration.inventory.stream.message.EventMessage;
 import rocks.process.integration.inventory.stream.message.OrderMessage;
-import rocks.process.integration.inventory.stream.sender.MessageEventSender;
 
 import java.util.List;
 
 @Component
-@EnableBinding(Sink.class)
+@EnableBinding({Sink.class, Source.class})
 public class MessageEventListener {
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    private MessageEventSender messageEventSender;
+    private InventoryService inventoryService;
 
     @Autowired
-    private InventoryService inventoryService;
+    @Output(Source.OUTPUT)
+    private MessageChannel messageChannel;
 
     private static Logger logger = LoggerFactory.getLogger(MessageEventListener.class);
 
     @StreamListener(target = Sink.INPUT,
-            condition="(headers['type']?:'')=='FetchGoods'")
+            condition="headers['type']=='FetchGoods'")
     @Transactional
     public void payment(@Payload EventMessage<OrderMessage> eventMessage) throws Exception {
         OrderMessage orderMessage = eventMessage.getPayload();
@@ -50,8 +54,13 @@ public class MessageEventListener {
         PackingSlip packingSlip = inventoryService.fetchGoods(Long.valueOf(orderMessage.getCustomerId()), orderMessage.getOrderId(), orderItems);
         orderMessage.setPackingSlipId(packingSlip.getPackingSlipId());
         orderMessage.setStatus("GoodsFetched");
-        messageEventSender.send(new EventMessage<>("ShipGoods", orderMessage));
+        send(new EventMessage<>("ShipGoods", orderMessage));
     }
 
+    public void send(EventMessage<OrderMessage> eventMessage) {
+        messageChannel.send(MessageBuilder.withPayload(eventMessage).setHeader("type", eventMessage.getType()).build());
+    }
 
+    @StreamListener(target = Sink.INPUT)
+    public void defaultListener() {}
 }

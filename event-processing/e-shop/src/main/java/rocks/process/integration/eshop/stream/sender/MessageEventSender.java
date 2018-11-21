@@ -5,33 +5,26 @@
 
 package rocks.process.integration.eshop.stream.sender;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import rocks.process.integration.eshop.stream.message.EventMessage;
+import rocks.process.integration.eshop.stream.message.OrderMessage;
 
 @Component
 @EnableBinding(Source.class)
 public class MessageEventSender {
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired @Output(Source.OUTPUT)
+    @Autowired
+    @Output(Source.OUTPUT)
     private MessageChannel messageChannel;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
-    public void send(EventMessage<?> eventMessage) {
-        try {
-            String jsonMessage = objectMapper.writeValueAsString(eventMessage);
-            messageChannel.send(MessageBuilder.withPayload(jsonMessage).setHeader("type", eventMessage.getType()).build());
-        } catch (Exception e) {
-            throw new RuntimeException("Could not transform and send message due to: "+ e.getMessage(), e);
-        }
+    public void send(EventMessage<OrderMessage> eventMessage) {
+        messageChannel.send(MessageBuilder.withPayload(eventMessage).setHeader("type", eventMessage.getType()).build());
     }
 }
