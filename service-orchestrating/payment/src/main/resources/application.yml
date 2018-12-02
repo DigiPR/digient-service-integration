@@ -1,2 +1,5 @@
 server:
-  port: 8084
+  port: ${PORT:8084}
+
+order-process:
+  url: ${ORDER_PROCESS_URL:http://localhost:8080/rest}
