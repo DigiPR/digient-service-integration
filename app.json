@@ -4,7 +4,7 @@
   "env": {
 	"ORDER_PROCESS_URL": {
       "description": "URL to the order process engine.",
-      "value": "https://digipr-order-process.herokuapp.com"
+      "value": "https://digipr-order-process.herokuapp.com/rest"
     },
     "PATH_TO_PROJECT": {
       "description": "The path to the default deployment of the multi module project.",
