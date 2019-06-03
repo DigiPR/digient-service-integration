@@ -25,7 +25,7 @@
     <informationRequirement>
       <requiredInput href="#InputData_1m41fkf" />
     </informationRequirement>
-    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+    <decisionTable id="decisionTable_1">
       <input id="input_1" label="Customer Type">
         <inputExpression id="inputExpression_1" typeRef="string">
           <text>customerType</text>
@@ -99,18 +99,35 @@
       </rule>
       <rule id="DecisionRule_135qugf">
         <inputEntry id="UnaryTests_0937hpz">
-          <text></text>
+          <text>"Business"</text>
         </inputEntry>
         <inputEntry id="UnaryTests_1hzmo2g">
           <text></text>
         </inputEntry>
         <inputEntry id="UnaryTests_0aohtlp">
-          <text></text>
+          <text>&lt;= 1000</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1enmvdw">
           <text>0.00</text>
         </outputEntry>
         <outputEntry id="LiteralExpression_10lu74m">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1op6c0q">
+        <inputEntry id="UnaryTests_1hck49l">
+          <text>"Private"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1amw4bb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1yfs7gn">
+          <text>&lt;= 500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07da8mh">
+          <text>0.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1r9hh14">
           <text>false</text>
         </outputEntry>
       </rule>
