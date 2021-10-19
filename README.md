@@ -1,5 +1,7 @@
 # Service Integration
 
+> ❗❗ **This repository has been archived**.
+
 - Spring REST / Web example
 - Apache CXF JAX-RS example
 - Apache Camel Routes (REST-to-REST)
